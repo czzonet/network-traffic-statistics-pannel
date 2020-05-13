@@ -4,5 +4,11 @@
   "main": "index.js",
   "repository": "https://github.com/czzonet/nodejs-excel",
   "author": "czz <czzonet@163.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@types/debug": "^4.1.5",
+    "@types/node": "^13.13.5",
+    "debug": "^4.1.1",
+    "moment": "^2.25.3"
+  }
 }
