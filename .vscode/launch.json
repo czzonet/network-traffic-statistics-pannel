@@ -9,12 +9,12 @@
       "request": "launch",
       "name": "Launch Program",
       "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}/dist/index.js",
+      "program": "${workspaceFolder}/server/dist/index.js",
       // "preLaunchTask": "tsc: build - tsconfig.json",
       "console": "integratedTerminal",
       "env": {
         "DEBUG": "*,-sequelize:sql:pg",
-        "PORT": "6002",
+        "PORT": "6003",
         "SYNC": "",
         "FORCE": "",
         // "DB_drop":"true"

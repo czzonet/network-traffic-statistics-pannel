@@ -1,5 +1,5 @@
 import * as path from 'path'
-import { existsfile, readfile, writefile } from './lib/asyncfile';
+import { existsfile, readfile, writefile } from '../lib/asyncfile';
 import * as Debug from 'debug'
 import { logTraffic } from './components/networkTraffic';
 /** define */
