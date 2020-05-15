@@ -1,8 +1,8 @@
-import { execfile } from "../lib/execfile"
+import { execfile } from "../../lib/execfile"
 import * as path from 'path'
 import * as Debug from 'debug'
 import * as moment from 'moment'
-import { writefile } from "../lib/asyncfile"
+import { writefile } from "../../lib/asyncfile"
 /** define */
 const NAME = 'networkTraffic'
 const debug = Debug(NAME)
