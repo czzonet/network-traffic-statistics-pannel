@@ -7,6 +7,8 @@ const store = {
     loading: false,
     res: [["", 0, 0]],
     current: "",
+    allrx: 0,
+    alltx: 0,
   },
   mutations: {
     LOADING: (state, payload: boolean) => {
@@ -24,6 +26,12 @@ const store = {
     CURRENT: (state, payload) => {
       state.current = deepcopywithwatch(state.current, payload);
     },
+    ALLRX: (state, payload: number) => {
+      state.allrx = payload;
+    },
+    ALLTX: (state, payload: number) => {
+      state.alltx = payload;
+    },
   },
   modules: {},
   actions: {
@@ -33,6 +41,8 @@ const store = {
         const res = await total();
         console.log("[I] [Total]: ", res.data);
         commit("RES", res.data.data);
+        commit("ALLRX", res.data.allrx);
+        commit("ALLTX", res.data.alltx);
         return true;
       } catch (error) {
         console.log("[E] [Total]: ", error);
@@ -78,6 +88,8 @@ type State = {
   loading: boolean;
   res: any[];
   current: string;
+  allrx: number;
+  alltx: number;
 };
 /** 模块 */
 type Modules = any;
