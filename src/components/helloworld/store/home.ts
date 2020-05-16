@@ -1,10 +1,11 @@
 import { total } from "../api";
+import { deepcopywithwatch } from "@/utils/deepcopywithwatch";
 
 const store = {
   namespaced: true,
   state: {
     loading: false,
-    res: {},
+    res: [[0, 0, 0]],
   },
   mutations: {
     LOADING: (state, payload: boolean) => {
@@ -17,7 +18,7 @@ const store = {
       state.loading = payload;
     },
     RES: (state, payload) => {
-      state.res = Object.assign({}, state.res, payload);
+      state.res = deepcopywithwatch(state.res, payload);
     },
   },
   modules: {},
@@ -27,7 +28,7 @@ const store = {
         commit("LOADING_ON", true);
         const res = await total();
         console.log("[I] [Total]: ", res.data);
-        commit("RES", res.data);
+        commit("RES", res.data.data);
         return true;
       } catch (error) {
         console.log("[E] [Total]: ", error);
@@ -57,7 +58,7 @@ type Store = {
 /** 状态 */
 type State = {
   loading: boolean;
-  res: any;
+  res: any[];
 };
 /** 模块 */
 type Modules = any;
