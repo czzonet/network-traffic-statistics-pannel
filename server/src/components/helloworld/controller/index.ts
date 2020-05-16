@@ -15,6 +15,12 @@ export const total: express.RequestHandler = async (req, res, next) => {
     res.json({
       code: 200,
       message: "ok",
+      data: [
+        [0, 0, 0],
+        [10, 1, 2],
+        [11, 21, 11],
+        [12, 3, 24],
+      ],
     });
   } catch (error) {
     next(error);
