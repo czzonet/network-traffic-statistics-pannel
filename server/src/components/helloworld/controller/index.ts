@@ -31,25 +31,30 @@ export const total: express.RequestHandler = async (req, res, next) => {
   }
 };
 
+/** 执行脚本，并把结果插入到数据库 */
+export const traffic2db = async () => {
+  const traffic = await trafficFormated();
+  const items = traffic.split("|");
+  const dataNew = {
+    date: items[0],
+    rx: parseFloat(items[1]),
+    tx: parseFloat(items[2]),
+  };
+  const newone = await models[MODEL].create(dataNew);
+  debug("newone %O", JSON.parse(JSON.stringify(newone)));
+};
+
 export const add: express.RequestHandler = async (req, res, next) => {
   debug(`body: %O`, req.body);
 
   try {
     // Add logic here
-    const traffic = await trafficFormated();
-    const items = traffic.split("|");
-    const dataNew = {
-      date: items[0],
-      rx: parseFloat(items[1]),
-      tx: parseFloat(items[2]),
-    };
-    const newone = await models[MODEL].create(dataNew);
-    debug("newone %O", JSON.parse(JSON.stringify(newone)));
+    await traffic2db();
 
     res.json({
       code: 200,
       message: "ok",
-      data: traffic,
+      data: "",
     });
   } catch (error) {
     next(error);

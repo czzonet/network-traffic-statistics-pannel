@@ -1,12 +1,18 @@
-import { shallowMount } from "@vue/test-utils";
-import HelloWorld from "@/components/helloworld/home.vue";
+import { sum } from "@/sum";
 
-// describe("HelloWorld.vue", () => {
-//   it("renders props.msg when passed", () => {
-//     const msg = "new message";
-//     const wrapper = shallowMount(HelloWorld, {
-//       propsData: { msg },
-//     });
-//     expect(wrapper.text()).toMatch(msg);
-//   });
-// });
+describe("sum to two numbers", () => {
+  test("adds 1 + 2 to equal 3", () => {
+    expect(sum(1, 2)).toBe(3);
+  });
+});
+
+describe("null has type", () => {
+  test("null", () => {
+    const n = null;
+    expect(n).toBeNull();
+    expect(n).toBeDefined();
+    expect(n).not.toBeUndefined();
+    expect(n).not.toBeTruthy();
+    expect(n).toBeFalsy();
+  });
+});
