@@ -34,7 +34,7 @@ export default Vue.extend({
           data: ["rx", "tx"]
         },
         title: {
-          text: "network traffic"
+          text: "网络流量（5分钟）"
         },
         dataset: {
           source: this.datasource

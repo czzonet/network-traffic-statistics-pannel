@@ -44,13 +44,14 @@ const onListening = () => {
 
       /** 后台任务 */
       const tasks = async () => {
+        /** 由于脚本执行需要3秒 所以不会死循环 */
         while (true) {
           await traffic2db();
         }
       };
 
       /** 调用后台任务 并不需要等待结束回调 */
-      // tasks();
+      tasks();
     } catch (error) {
       console.log(`[E] [dbinit]`, error);
     }

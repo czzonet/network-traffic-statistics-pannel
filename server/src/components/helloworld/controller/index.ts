@@ -13,10 +13,21 @@ export const total: express.RequestHandler = async (req, res, next) => {
 
   try {
     // Add logic here
-    const allone = await models[MODEL].findAll();
+    /** 正好取最近5分钟的数据 */
+    const allone = await models[MODEL].findAll({
+      limit: 100,
+      order: [["id", "desc"]],
+    });
+    let allrx = await models[MODEL].sum("rx");
+    let alltx = await models[MODEL].sum("tx");
+
+    /** 3秒统计一次 总量要相乘 */
+    allrx *= 3;
+    alltx *= 3;
 
     const planeAll = JSON.parse(JSON.stringify(allone)) as any[];
     debug("allone %O", planeAll);
+    /** 转化为表单数据 */
     const v = planeAll.map((d) => {
       return [d.date, d.rx, d.tx];
     });
@@ -25,6 +36,8 @@ export const total: express.RequestHandler = async (req, res, next) => {
       code: 200,
       message: "ok",
       data: v,
+      allrx,
+      alltx,
     });
   } catch (error) {
     next(error);
