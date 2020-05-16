@@ -13,7 +13,7 @@ export default Vue.extend({
   props: ["datasource"],
   data() {
     return {
-      chartHandle: {}
+      chartHandle: {},
     };
   },
   watch: {
@@ -21,8 +21,8 @@ export default Vue.extend({
       handler() {
         this.setChart();
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
   methods: {
     initChart() {
@@ -31,42 +31,42 @@ export default Vue.extend({
     setChart() {
       (this.chartHandle as echarts.ECharts).setOption({
         legend: {
-          data: ["rx", "tx"]
+          data: ["rx", "tx"],
         },
         title: {
-          text: "network traffic"
+          text: "network traffic",
         },
         dataset: {
           source: this.datasource
             ? this.datasource
             : [
                 [10, 1, 2],
-                [11, 21, 11]
-              ]
+                [11, 21, 11],
+              ],
         },
         xAxis: {
-          type: "value"
+          type: "time",
         },
         yAxis: { name: "KB" },
         series: [
           {
             name: "rx",
             type: "line",
-            encode: { x: 0, y: 1 }
+            encode: { x: 0, y: 1 },
           },
           {
             name: "tx",
             type: "line",
-            encode: { x: 0, y: 2 }
-          }
-        ]
+            encode: { x: 0, y: 2 },
+          },
+        ],
       });
-    }
+    },
   },
   mounted() {
     this.initChart();
     this.setChart();
-  }
+  },
 });
 </script>
 
@@ -76,4 +76,3 @@ export default Vue.extend({
   height: 500px;
 }
 </style>
-

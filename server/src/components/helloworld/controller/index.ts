@@ -6,21 +6,25 @@ import * as moment from "moment";
 import { queryRaw } from "../../../utils/rawquerypure";
 import { excelHelper } from "../../../utils/excelHelper";
 import { saferead } from "../../../utils/saferead";
+import { trafficFormated } from "../../../logtraffic/components/networkTraffic";
 
 export const total: express.RequestHandler = async (req, res, next) => {
   debug(`body: %O`, req.body);
 
   try {
     // Add logic here
+    const allone = await models[MODEL].findAll();
+
+    const planeAll = JSON.parse(JSON.stringify(allone)) as any[];
+    debug("allone %O", planeAll);
+    const v = planeAll.map((d) => {
+      return [d.date, d.rx, d.tx];
+    });
+
     res.json({
       code: 200,
       message: "ok",
-      data: [
-        [0, 0, 0],
-        [10, 1, 2],
-        [11, 21, 11],
-        [12, 3, 24],
-      ],
+      data: v,
     });
   } catch (error) {
     next(error);
@@ -32,6 +36,21 @@ export const add: express.RequestHandler = async (req, res, next) => {
 
   try {
     // Add logic here
+    const traffic = await trafficFormated();
+    const items = traffic.split("|");
+    const dataNew = {
+      date: items[0],
+      rx: parseFloat(items[1]),
+      tx: parseFloat(items[2]),
+    };
+    const newone = await models[MODEL].create(dataNew);
+    debug("newone %O", JSON.parse(JSON.stringify(newone)));
+
+    res.json({
+      code: 200,
+      message: "ok",
+      data: traffic,
+    });
   } catch (error) {
     next(error);
   }
