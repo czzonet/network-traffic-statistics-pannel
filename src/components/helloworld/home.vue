@@ -1,16 +1,16 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
     <p>
-      <el-button @click="test">测试后端连接</el-button>
+      <bar-chart :datasource="res"></bar-chart>
     </p>
     <p>
-      {{ res }}
+      <el-button @click="test">刷新</el-button>
     </p>
   </div>
-</template>
+</template> 
 
 <script lang="ts">
+import BarChart from "./views/BarChart/index.vue";
 /** define */
 import {
   getMapMutations,
@@ -18,7 +18,7 @@ import {
   getMapState,
   NAME,
   MODULE_HOME,
-  CONTENT,
+  CONTENT
 } from "./define";
 import Vue from "vue";
 import { total } from "./api/index";
@@ -27,24 +27,25 @@ import { mapState, mapMutations, mapActions } from "vuex";
 export default Vue.extend({
   name: "home",
   props: {
-    msg: String,
+    msg: String
   },
+  components: { BarChart },
   data() {
     return {
-      data: {},
+      data: {}
     };
   },
   computed: {
-    ...mapState([NAME, MODULE_HOME].join("/"), ["res"]),
+    ...mapState([NAME, MODULE_HOME].join("/"), ["res"])
   },
   methods: {
     ...mapActions([NAME, MODULE_HOME].join("/"), ["Total"]),
     test() {
-      this.Total().then((d) => {
+      this.Total().then(d => {
         d ? this.$message.success("已刷新") : this.$message.error("请求失败");
       });
-    },
-  },
+    }
+  }
 });
 </script>
 
@@ -63,5 +64,8 @@ li {
 }
 a {
   color: #42b983;
+}
+.hello {
+  padding: 40px;
 }
 </style>
