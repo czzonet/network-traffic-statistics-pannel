@@ -4,10 +4,14 @@
       <bar-chart :datasource="res"></bar-chart>
     </p>
     <p>
+      {{ current }}
+    </p>
+    <p>
       <el-button @click="test">刷新</el-button>
+      <el-button @click="add" :loading="loading">实时</el-button>
     </p>
   </div>
-</template> 
+</template>
 
 <script lang="ts">
 import BarChart from "./views/BarChart/index.vue";
@@ -18,7 +22,7 @@ import {
   getMapState,
   NAME,
   MODULE_HOME,
-  CONTENT
+  CONTENT,
 } from "./define";
 import Vue from "vue";
 import { total } from "./api/index";
@@ -27,25 +31,30 @@ import { mapState, mapMutations, mapActions } from "vuex";
 export default Vue.extend({
   name: "home",
   props: {
-    msg: String
+    msg: String,
   },
   components: { BarChart },
   data() {
     return {
-      data: {}
+      data: {},
     };
   },
   computed: {
-    ...mapState([NAME, MODULE_HOME].join("/"), ["res"])
+    ...mapState([NAME, MODULE_HOME].join("/"), ["loading", "res", "current"]),
   },
   methods: {
-    ...mapActions([NAME, MODULE_HOME].join("/"), ["Total"]),
+    ...mapActions([NAME, MODULE_HOME].join("/"), ["Total", "Add"]),
     test() {
-      this.Total().then(d => {
+      this.Total().then((d) => {
         d ? this.$message.success("已刷新") : this.$message.error("请求失败");
       });
-    }
-  }
+    },
+    add() {
+      this.Add().then((d) => {
+        d ? this.$message.success("已刷新") : this.$message.error("请求失败");
+      });
+    },
+  },
 });
 </script>
 

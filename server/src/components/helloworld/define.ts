@@ -1,9 +1,9 @@
 /** name */
-export const NAME = 'template'
-export const MODEL = 'template'
+export const NAME = "helloworld";
+export const MODEL = "traffic";
 /** debug */
-import Debug from 'debug'
-export const debug = Debug(NAME)
+import Debug from "debug";
+export const debug = Debug(NAME);
 /** models */
 export { default as models } from "../../models";
 /** router */
