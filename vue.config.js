@@ -1,3 +1,6 @@
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
+
 module.exports = {
   // productionSourceMap: false,
   devServer: {
@@ -38,4 +41,7 @@ module.exports = {
   //     .loader("ts-loader")
   //     .end();
   // },
+  chainWebpack: (config) => {
+    config.plugin("webpack-bundle-analyzer").use(BundleAnalyzerPlugin);
+  },
 };
