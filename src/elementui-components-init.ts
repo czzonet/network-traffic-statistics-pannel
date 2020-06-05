@@ -1,11 +1,12 @@
 import Vue from "vue";
+import "element-ui/lib/theme-chalk/index.css";
 import {
   // Pagination,
   // Dialog,
   // Autocomplete,
-  Dropdown,
-  DropdownMenu,
-  DropdownItem,
+  // Dropdown,
+  // DropdownMenu,
+  // DropdownItem,
   Menu,
   Submenu,
   MenuItem,
@@ -16,14 +17,14 @@ import {
   // RadioGroup,
   // RadioButton,
   Checkbox,
-  CheckboxButton,
-  CheckboxGroup,
+  // CheckboxButton,
+  // CheckboxGroup,
   // Switch,
   // Select,
   // Option,
   // OptionGroup,
   Button,
-  ButtonGroup,
+  // ButtonGroup,
   // Table,
   // TableColumn,
   // DatePicker,
@@ -46,7 +47,7 @@ import {
   // Col,
   // Upload,
   // Progress,
-  // Spinner,
+  // // Spinner,
   // Badge,
   // Card,
   // Rate,
@@ -72,7 +73,7 @@ import {
   // Calendar,
   // Backtop,
   // PageHeader,
-  // CascaderPanel,
+  // // CascaderPanel,
   Loading,
   MessageBox,
   Message,
@@ -83,9 +84,9 @@ export const initElementUI = () => {
   // Vue.use(Pagination);
   // Vue.use(Dialog);
   // Vue.use(Autocomplete);
-  Vue.use(Dropdown);
-  Vue.use(DropdownMenu);
-  Vue.use(DropdownItem);
+  // Vue.use(Dropdown);
+  // Vue.use(DropdownMenu);
+  // Vue.use(DropdownItem);
   Vue.use(Menu);
   Vue.use(Submenu);
   Vue.use(MenuItem);
@@ -96,14 +97,14 @@ export const initElementUI = () => {
   // Vue.use(RadioGroup);
   // Vue.use(RadioButton);
   Vue.use(Checkbox);
-  Vue.use(CheckboxButton);
-  Vue.use(CheckboxGroup);
+  // Vue.use(CheckboxButton);
+  // Vue.use(CheckboxGroup);
   // Vue.use(Switch);
   // Vue.use(Select);
   // Vue.use(Option);
   // Vue.use(OptionGroup);
   Vue.use(Button);
-  Vue.use(ButtonGroup);
+  // Vue.use(ButtonGroup);
   // Vue.use(Table);
   // Vue.use(TableColumn);
   // Vue.use(DatePicker);
@@ -126,7 +127,7 @@ export const initElementUI = () => {
   // Vue.use(Col);
   // Vue.use(Upload);
   // Vue.use(Progress);
-  // Vue.use(Spinner);
+  // // Vue.use(Spinner);
   // Vue.use(Badge);
   // Vue.use(Card);
   // Vue.use(Rate);
@@ -152,7 +153,7 @@ export const initElementUI = () => {
   // Vue.use(Calendar);
   // Vue.use(Backtop);
   // Vue.use(PageHeader);
-  // Vue.use(CascaderPanel);
+  // // Vue.use(CascaderPanel);
 
   Vue.use(Loading.directive);
 

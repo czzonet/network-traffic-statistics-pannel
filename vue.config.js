@@ -51,16 +51,17 @@ module.exports = {
   //     .end();
   // },
   chainWebpack: (config) => {
+    config
+      .plugin("moment-ignore")
+      .use(
+        new webpack.ContextReplacementPlugin(
+          /moment[/\\]locale$/,
+          /zh-cn|zh-hk|en/
+        )
+      );
     if (ENV === "production") {
       config.plugin("webpack-bundle-analyzer").use(BundleAnalyzerPlugin);
-      config
-        .plugin("moment-ignore")
-        .use(
-          new webpack.ContextReplacementPlugin(
-            /moment[/\\]locale$/,
-            /zh-cn|zh-hk|en/
-          )
-        );
+
       config.plugin("gzip").use(
         new CompressionWebpackPlugin({
           algorithm: "gzip",
@@ -73,5 +74,5 @@ module.exports = {
   },
 
   // 禁用生产环境的sourceMap
-  // productionSourceMap: false,
+  productionSourceMap: false,
 };
