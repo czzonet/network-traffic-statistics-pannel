@@ -1,6 +1,9 @@
+const webpack = require("webpack");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
+const CompressionWebpackPlugin = require("compression-webpack-plugin");
 
+const ENV = process.env.NODE_ENV || "development";
 module.exports = {
   // productionSourceMap: false,
   devServer: {
@@ -32,13 +35,6 @@ module.exports = {
   configureWebpack: {
     devtool: "source-map",
     externals: {
-      /**
-       * 这里采用Object的形式
-       * 更多的形式参考(https://webpack.js.org/configuration/externals/#src/components/Sidebar/Sidebar.jsx)
-       * key: 依赖包的名字
-       * value: 依赖包挂载在项目中的变量名
-       * 挂载的变量必须与依赖包中挂载的一样，在项目中使用也是这个变量名
-       */
       vue: "Vue",
       "vue-router": "VueRouter",
       vuex: "Vuex",
@@ -55,6 +51,27 @@ module.exports = {
   //     .end();
   // },
   chainWebpack: (config) => {
-    config.plugin("webpack-bundle-analyzer").use(BundleAnalyzerPlugin);
+    if (ENV === "production") {
+      config.plugin("webpack-bundle-analyzer").use(BundleAnalyzerPlugin);
+      config
+        .plugin("moment-ignore")
+        .use(
+          new webpack.ContextReplacementPlugin(
+            /moment[/\\]locale$/,
+            /zh-cn|zh-hk|en/
+          )
+        );
+      config.plugin("gzip").use(
+        new CompressionWebpackPlugin({
+          algorithm: "gzip",
+          test: /\.(js|css|html)$/,
+          threshold: 10240,
+          minRatio: 0.8,
+        })
+      );
+    }
   },
+
+  // 禁用生产环境的sourceMap
+  // productionSourceMap: false,
 };
