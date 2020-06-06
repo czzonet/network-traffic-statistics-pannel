@@ -1,3 +1,9 @@
+const webpack = require("webpack");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
+const CompressionWebpackPlugin = require("compression-webpack-plugin");
+
+const ENV = process.env.NODE_ENV || "development";
 module.exports = {
   // productionSourceMap: false,
   devServer: {
@@ -28,6 +34,12 @@ module.exports = {
   },
   configureWebpack: {
     devtool: "source-map",
+    externals: {
+      vue: "Vue",
+      "vue-router": "VueRouter",
+      vuex: "Vuex",
+      axios: "axios",
+    },
   },
   // chainWebpack: (config) => {
   //   // new Loader for ts
@@ -38,4 +50,29 @@ module.exports = {
   //     .loader("ts-loader")
   //     .end();
   // },
+  chainWebpack: (config) => {
+    config
+      .plugin("moment-ignore")
+      .use(
+        new webpack.ContextReplacementPlugin(
+          /moment[/\\]locale$/,
+          /zh-cn|zh-hk|en/
+        )
+      );
+    if (ENV === "production") {
+      config.plugin("webpack-bundle-analyzer").use(BundleAnalyzerPlugin);
+
+      config.plugin("gzip").use(
+        new CompressionWebpackPlugin({
+          algorithm: "gzip",
+          test: /\.(js|css|html)$/,
+          threshold: 10240,
+          minRatio: 0.8,
+        })
+      );
+    }
+  },
+
+  // 禁用生产环境的sourceMap
+  productionSourceMap: false,
 };
