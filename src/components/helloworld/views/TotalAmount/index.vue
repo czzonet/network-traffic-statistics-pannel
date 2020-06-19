@@ -29,7 +29,7 @@ export default Vue.extend({
         : source >= 1000 && source < 1000000
         ? (t = (source / 1000).toFixed(2) + "MB")
         : source >= 1000
-        ? (t = (source / 1000).toFixed(2) + "GB")
+        ? (t = (source / 1000000).toFixed(2) + "GB")
         : "--";
 
       t = "(" + t + ")";
