@@ -6,16 +6,16 @@
     <p>
       <b>
         <div>
-          <span>总接收(KB):</span>
-          {{ (allrx).toFixed(2) }}
+          <span>总接收:</span>
+          <total-amount :amount="allrx"></total-amount>
         </div>
       </b>
     </p>
     <p>
       <b>
         <div>
-          <span>总上传(KB):</span>
-          {{ (alltx).toFixed(2) }}
+          <span>总上传:</span>
+          <total-amount :amount="alltx"></total-amount>
         </div>
       </b>
     </p>
@@ -29,6 +29,7 @@
 
 <script lang="ts">
 import BarChart from "./views/BarChart/index.vue";
+import TotalAmount from "./views/TotalAmount/index.vue";
 /** define */
 import {
   getMapMutations,
@@ -47,7 +48,7 @@ export default Vue.extend({
   props: {
     msg: String
   },
-  components: { BarChart },
+  components: { BarChart, TotalAmount },
   data() {
     return {
       data: {},
