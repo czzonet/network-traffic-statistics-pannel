@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 import helloworld from "../components/helloworld/store/index";
 import template from "../components/template/store/index";
+import login from "../components/login/store/index";
 
 const store = {
   state: {
@@ -13,7 +14,7 @@ const store = {
   },
   mutations: {},
   actions: {},
-  modules: { helloworld, template },
+  modules: { helloworld, template, login },
 } as StoreType<State>;
 
 const MainStore = new Vuex.Store(store);
