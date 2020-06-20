@@ -13,7 +13,7 @@ export default Vue.extend({
   props: ["datasource"],
   data() {
     return {
-      chartHandle: {},
+      chartHandle: {}
     };
   },
   watch: {
@@ -21,8 +21,8 @@ export default Vue.extend({
       handler() {
         this.setChart();
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
   methods: {
     initChart() {
@@ -31,48 +31,48 @@ export default Vue.extend({
     setChart() {
       (this.chartHandle as echarts.ECharts).setOption({
         legend: {
-          data: ["rx", "tx"],
+          data: ["rx", "tx"]
         },
         title: {
-          text: "网络流量（5分钟）",
+          text: "网络流量（5分钟）"
         },
         dataset: {
           source: this.datasource
             ? this.datasource
             : [
                 [10, 1, 2],
-                [11, 21, 11],
-              ],
+                [11, 21, 11]
+              ]
         },
         xAxis: {
-          type: "time",
+          type: "time"
         },
         yAxis: { name: "KB" },
         dataZoom: [
           {
-            startValue: "2020-05-16T05:15:19.451Z",
+            startValue: this.datasource[0][1]
           },
-          { type: "inside" },
+          { type: "inside" }
         ],
         series: [
           {
             name: "rx",
             type: "line",
-            encode: { x: 0, y: 1 },
+            encode: { x: 0, y: 1 }
           },
           {
             name: "tx",
             type: "line",
-            encode: { x: 0, y: 2 },
-          },
-        ],
+            encode: { x: 0, y: 2 }
+          }
+        ]
       });
-    },
+    }
   },
   mounted() {
     this.initChart();
     this.setChart();
-  },
+  }
 });
 </script>
 
