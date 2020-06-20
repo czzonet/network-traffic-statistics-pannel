@@ -16,7 +16,7 @@ const routes: Array<RouteConfig> = [
   {
     path: "/",
     name: "/",
-    redirect: "/main",
+    redirect: "/auth",
   },
   {
     path: "/auth",
