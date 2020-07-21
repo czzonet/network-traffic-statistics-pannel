@@ -6,7 +6,8 @@ import * as moment from "moment";
 import { queryRaw } from "../../../utils/rawquerypure";
 import { excelHelper } from "../../../utils/excelHelper";
 import { saferead } from "../../../utils/saferead";
-import { trafficFormated } from "../../../logtraffic/components/networkTraffic";
+import { readUpdateOutputFromShell } from "../../../lib/readUpdateOutputFromShell";
+import { sarParse } from "../../../lib/sarParse";
 
 export const total: express.RequestHandler = async (req, res, next) => {
   debug(`body: %O`, req.body);
@@ -44,17 +45,38 @@ export const total: express.RequestHandler = async (req, res, next) => {
   }
 };
 
-/** 执行脚本，并把结果插入到数据库 */
+/**
+ * 执行脚本，并把结果插入到数据库
+ * 注意持续并无法关闭
+ */
 export const traffic2db = async () => {
-  const traffic = await trafficFormated();
-  const items = traffic.split("|");
-  const dataNew = {
-    date: items[0],
-    rx: parseFloat(items[1]),
-    tx: parseFloat(items[2]),
-  };
-  const newone = await models[MODEL].create(dataNew);
-  debug("newone %O", JSON.parse(JSON.stringify(newone)));
+  await readUpdateOutputFromShell(
+    "sar",
+    ["-n", "DEV", "1"],
+    (data) => {
+      const items = sarParse(data.toString());
+      /** 当存在非空数组时 */
+      if (items.length) {
+        /** 取第一个网卡 */
+        const dataNew = {
+          date: moment().toISOString(),
+          rx: items[0]["rxkB/s"],
+          tx: items[0]["rxkB/s"],
+        };
+
+        const h = async () => {
+          const newone = await models[MODEL].create(dataNew);
+          debug("newone %O", JSON.parse(JSON.stringify(newone)));
+        };
+
+        h().then();
+      } else {
+      }
+    },
+    (err) => {
+      console.error(err);
+    }
+  );
 };
 
 export const add: express.RequestHandler = async (req, res, next) => {
@@ -62,7 +84,7 @@ export const add: express.RequestHandler = async (req, res, next) => {
 
   try {
     // Add logic here
-    await traffic2db();
+    // await traffic2db();
 
     res.json({
       code: 200,
